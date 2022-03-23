@@ -47,57 +47,7 @@ public class CohortService {
 
     Radet radet = new Radet();
 
-    public void createCohortAge(){
-        List<FlatFile> cohortList = new ArrayList<>();
-//        cohortList.add(createCohortAgeLessThan1());
-//        cohortList.add(createCohortAge1to4());
-//        cohortList.add(createCohortAge5to9());
-//        cohortList.add(createCohortAge10to14());
-//        cohortList.add(createCohortAge15to19());
-//        cohortList.add(createCohortAge20to24());
-//        cohortList.add(createCohortAge25to29());
-//        cohortList.add(createCohortAge30to34());
-//        cohortList.add(createCohortAge35to39());
-//        cohortList.add(createCohortAge40to44());
-//        cohortList.add(createCohortAge45to49());
-//       // cohortList.add(createCohortAge15plus());
-//        cohortList.add(createCohortAge50plus());
-//        cohortList.add(createCohortFemale());
-//        cohortList.add(createCohortMale());
-//        cohortList.add(createCohortDeadPatients());
-//        cohortList.add(createCohortTransferredOut());
-//        cohortList.add(createCohortStoppedTreatment());
-//        cohortList.add(createCohortTransfferredIn());
-//        cohortList.add(createCohortReturnToCare());
-//        cohortList.add(createCohortArtStart(new Date()));
-//        cohortList.add(createCohortTXNew());
-          cohortList.add(createCohortTXNewFemale1to4());
-//          cohortList.add(createCohortTXNewFemale5to9());
-//        cohortList.add(createCohortTXNewFemale10to14());
-//        cohortList.add(createCohortTXNewFemale15to19());
-//        cohortList.add(createCohortTXNewFemale20to24());
-//        cohortList.add(createCohortTXNewFemale25to29());
-//        cohortList.add(createCohortTXNewFemale30to34());
-//        cohortList.add(createCohortTXNewFemale35to39());
-//        cohortList.add(createCohortTXNewFemale40to44());
-//        cohortList.add(createCohortTXNewFemale45to49());
-//        cohortList.add(createCohortTXNewFemale50Plus());
 
-//        cohortList.add(createCohortTXNewMale1to4());
-//        cohortList.add(createCohortTXNewMale5to9());
-//        cohortList.add(createCohortTXNewMale10to14());
-//        cohortList.add(createCohortTXNewMale15to19());
-//        cohortList.add(createCohortTXNewMale20to24());
-//        cohortList.add(createCohortTXNewMale25to29());
-//        cohortList.add(createCohortTXNewMale30to34());
-//        cohortList.add(createCohortTXNewMale35to39());
-//        cohortList.add(createCohortTXNewMale40to44());
-//        cohortList.add(createCohortTXNewMale45to49());
-//        cohortList.add(createCohortTXNewMale50Plus());
-  //      cohortList.add(createCohortTExit());
-
-        saveCohort(cohortList);
-    }
     void saveCohort(List<FlatFile> cohortList){
         flatFileRepository.saveAll(cohortList);
     }

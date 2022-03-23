@@ -1,27 +1,17 @@
 package com.etlservice.schedular.SchedularService;
 
-import com.etlservice.schedular.database.Dbconfig;
+
 import com.etlservice.schedular.model.Container;
 import com.etlservice.schedular.model.Quarter;
 import com.etlservice.schedular.model.Radet;
-import com.etlservice.schedular.model.Test;
 import com.etlservice.schedular.mongorepo.MongoRepos;
 import com.etlservice.schedular.mongorepo.postgres.PostgresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,56 +23,24 @@ public class RadetService {
 
    Quarter quarter = new Quarter();
 
-
-    public void createTest(String  test){
+    @Scheduled(fixedDelay = 20000L)
+    public void createTest(){
       List<Container> containerList =  mongoRepos.findAll();
-        List<Radet> containerListRecord = new ArrayList<>();
-        int count = 0;
+      List<Radet> containerListRecord = new ArrayList<>();
+      int count = 0;
       for(Container container : containerList) {
-          System.out.println("Container: " + container.toString());
           Radet radetRecord  = setupContainer(container);
           containerListRecord.add(radetRecord);
-//          postgresRepository.save(radetRecord);
-          System.out.println("Count: "+ ++count);
       }
         if(!containerListRecord.isEmpty())
         postgresRepository.saveAll(containerListRecord);
-
         containerListRecord.clear();
-        //createFlatFile();
     }
 
-    public void createCohortAge(){
-        List<Radet> radetList = postgresRepository.findRadetsByCurrentAgeYearsBetween(1,4);
-        System.out.println("Cohort Size: "+radetList.size());
 
-//        for(Radet radet : radetList){
-//            if(radet.getCurrentAgeYears() !=null)
-//            System.out.println(radet.getCurrentAgeYears());
-//        }
-    }
-    public void createFlatFile()   {
-
-        try {
-            // creating a date object with specified time.
-            LocalDate loc = quarter.getQuarterDate();
-            Date quarterDate = Date.from(loc.atStartOfDay()
-                    .atZone(ZoneId.systemDefault())
-                    .toInstant());
-            //LocalDate today = quarter.convertDate(new Date());
-            Date dateOne = new SimpleDateFormat("yyyy-MM-dd").parse("2021-02-01");
-            Date today = new Date();
-            List<Radet> txNew = postgresRepository.findRadetsByArtStartDateBetween(quarterDate, today);
-            for (Radet radet : txNew)
-                System.out.println("TX_NEW: " + radet.toString());//radet.toString());
-        }catch (ParseException p){
-            p.printStackTrace();
-        }
-    }
      private Radet setupContainer(Container container){
          Radet radet = new Radet(container);
          Radet radetContent =new Radet();
-//         radetContent.setId("");
          radetContent.setDatimCode(radet.getDatimCode());
          radetContent.setFacilityName(radet.getFacilityName());
          radetContent.setPatientID(radet.getPatientID());
@@ -135,7 +93,6 @@ public class RadetService {
          radetContent.setMmdType(radet.getMmdType());
          radetContent.setDateReturnedToCare(radet.getDateReturnedToCare());
          radetContent.setDateOfTermination(radet.getDateOfTermination());
-//         radetContent.setLastAppointmentDate(radet.getLastAppointmentDate());
          radetContent.setPharmacyNextAppointment(radet.getPharmacyNextAppointment());
          radetContent.setClinicalNextAppointment(radet.getClinicalNextAppointment());
          radetContent.setCurrentAgeYears(radet.getCurrentAgeYears());
