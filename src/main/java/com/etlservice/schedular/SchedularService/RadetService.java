@@ -7,15 +7,21 @@ import com.etlservice.schedular.model.Radet;
 import com.etlservice.schedular.mongorepo.MongoRepos;
 import com.etlservice.schedular.mongorepo.postgres.PostgresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class RadetService {
+    int PAGE = 0;
+    int SIZE = 1000;
     @Autowired
     PostgresRepository postgresRepository;
     @Autowired
@@ -23,18 +29,40 @@ public class RadetService {
 
    Quarter quarter = new Quarter();
 
-    @Scheduled(fixedDelay = 20000L)
+    @Scheduled(fixedDelay = 2000L, initialDelay = 2000L)
     public void createTest(){
-      List<Container> containerList =  mongoRepos.findAll();
-      List<Radet> containerListRecord = new ArrayList<>();
-      int count = 0;
-      for(Container container : containerList) {
-          Radet radetRecord  = setupContainer(container);
-          containerListRecord.add(radetRecord);
+//    AtomicInteger count = new AtomicInteger();
+
+        Pageable pageRequest = PageRequest.of(PAGE, SIZE);
+        Page<Container> onePage = mongoRepos.findAll(pageRequest);
+
+        while (!onePage.isEmpty()) {
+            pageRequest = pageRequest.next();
+
+            createRadetRecord(onePage.toList());
+            //DO SOMETHING WITH ENTITIES
+//            onePage.forEach(entity ->
+//                    //System.out.println(count.incrementAndGet())
+//                    System.out.println(entity.getId())
+//            );
+
+            onePage = mongoRepos.findAll(pageRequest);
+        }
+
+    }
+
+    private void createRadetRecord(List<Container> containerList){
+      if(!containerList.isEmpty()) {
+          List<Radet> containerListRecord = new ArrayList<>();
+          for (Container container : containerList) {
+              Radet radetRecord = setupContainer(container);
+              containerListRecord.add(radetRecord);
+          }
+          if (!containerListRecord.isEmpty())
+              postgresRepository.saveAll(containerListRecord);
+
+          containerListRecord.clear();
       }
-        if(!containerListRecord.isEmpty())
-        postgresRepository.saveAll(containerListRecord);
-        containerListRecord.clear();
     }
 
 
