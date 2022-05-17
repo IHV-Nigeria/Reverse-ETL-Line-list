@@ -29,7 +29,7 @@ public class RadetService {
 
    Quarter quarter = new Quarter();
 
-    @Scheduled(fixedDelay = 2000L, initialDelay = 2000L)
+   // @Scheduled(fixedDelay = 2000L, initialDelay = 2000L)
     public void createTest(){
 //    AtomicInteger count = new AtomicInteger();
 
