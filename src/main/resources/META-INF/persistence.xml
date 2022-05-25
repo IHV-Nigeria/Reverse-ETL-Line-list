@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.etlservice.schedular.entities.ArtLinelist</class>
     <class>com.etlservice.schedular.entities.HtsLinelist</class>
+    <class>com.etlservice.schedular.entities.FileUpload</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ihvn_cdr"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

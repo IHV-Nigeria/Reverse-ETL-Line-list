@@ -192,5 +192,16 @@ public class HelperFunctions {
                 .max(Comparator.comparing(ObsType::getDateCreated));
         
     }
+
+
+  public static Optional<ObsType> getMinObsbyConceptID(int enconterTypeId,int conceptId, Container container) {
+        
+        return container.getMessageData().getObs()
+                .stream()
+                .filter(a -> a.getEncounterType() == enconterTypeId)
+                .filter(b -> b.getConceptId()==conceptId)
+                .min(Comparator.comparing(ObsType::getDateCreated));
+        
+    }
     
 }
