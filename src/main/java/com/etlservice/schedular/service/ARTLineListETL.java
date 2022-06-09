@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author MORRISON.I
  */
 
-@Service
+
 public interface ARTLineListETL {
     
     void extractData(List<Container> mongoContainers);

@@ -7,6 +7,7 @@ package com.etlservice.schedular.messaging;
 import com.etlservice.schedular.model.Container;
 import com.etlservice.schedular.service.ARTLineListETL;
 import com.etlservice.schedular.serviceImpl.ARTLineListETLImpl;
+import com.etlservice.schedular.utils.QueueNames;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,21 +36,25 @@ public class ETLConsumer {
     MongoTemplate mongoTemplate;
 
     @Autowired
-    ARTLineListETL aRTLineListETL;
+    private ARTLineListETL aRTLineListETL;
 
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${queue.name}", durable = "true"),
-            exchange = @Exchange(value = "${exchange.name}", ignoreDeclarationExceptions = "true"),
-            key = "${routing-key.name}")
-    )
-    public void receive(@Payload String body) throws JsonProcessingException {
+    @RabbitListener(queues = QueueNames.ETL_QUEUE)
+    public void receive(List<Container> containerList) throws JsonProcessingException {
         // System.out.println("Got this");
-        ObjectMapper mm = new ObjectMapper();
-        List<String> Ids = mm.readValue(body, new TypeReference<List<String>>() {
-        });
-        System.out.println("total ids gotten: " + Ids.size());
-        aRTLineListETL.extractData(retrieveContainers(Ids));
+//        ObjectMapper mm = new ObjectMapper();
+//        List<String> Ids = mm.readValue(body, new TypeReference<List<String>>() {
+//        });
+//        System.out.println("total ids gotten: " + Ids.size());
+        aRTLineListETL.extractData(containerList);
     }
+//    public void receive(@Payload String body) throws JsonProcessingException {
+//        // System.out.println("Got this");
+//        ObjectMapper mm = new ObjectMapper();
+//        List<String> Ids = mm.readValue(body, new TypeReference<List<String>>() {
+//        });
+//        System.out.println("total ids gotten: " + Ids.size());
+//        aRTLineListETL.extractData(retrieveContainers(Ids));
+//    }
 
     private List<Container> retrieveContainers(List<String> ids) {
 
