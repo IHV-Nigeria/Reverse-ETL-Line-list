@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -26,10 +28,9 @@ import org.springframework.stereotype.Service;
  * @author MORRISON.I
  */
 @Service
+@RequiredArgsConstructor
 public class ARTLineListETLImpl implements ARTLineListETL {
-
-    @Autowired
-    ArtLineListRepository artLineListRepository;
+    private final ArtLineListRepository artLineListRepository;
 
     @Override
     public void extractData(List<Container> mongoContainers) {
