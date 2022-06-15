@@ -64,7 +64,7 @@ public class ARTLineListETLImpl implements ARTLineListETL {
         artLinelist.setTransferInStatus(HelperFunctions.getObsbyConceptID(165242, container).map(ObsType::getVariableValue).orElse(null));
         artLinelist.setArtStartDate(HelperFunctions.getArtStartDate(container));
         artLinelist.setLastPickupDate(HelperFunctions.getMaxEncounterDateTime(27, container));
-        artLinelist.setLastVisitDate(HelperFunctions.getMaxVisitDate(container).map(x -> x).orElse(null));
+        artLinelist.setLastVisitDate(HelperFunctions.getMaxVisitDate(container).orElse(null));
         Optional<ObsType> maxObsbyConceptID = HelperFunctions.getMaxObsbyConceptID(ConstantsUtils.PharmacyEncounterType, 159368, container);
         if (maxObsbyConceptID.isPresent()) {
             artLinelist.setDaysOfArvRefil(maxObsbyConceptID.map(ObsType::getValueNumeric).get().toBigInteger());
