@@ -31,8 +31,6 @@ public class RadetService {
 
    // @Scheduled(fixedDelay = 2000L, initialDelay = 2000L)
     public void createTest(){
-//    AtomicInteger count = new AtomicInteger();
-
         Pageable pageRequest = PageRequest.of(PAGE, SIZE);
         Page<Container> onePage = mongoRepos.findAll(pageRequest);
 
@@ -45,13 +43,12 @@ public class RadetService {
 //                    //System.out.println(count.incrementAndGet())
 //                    System.out.println(entity.getId())
 //            );
-
             onePage = mongoRepos.findAll(pageRequest);
         }
 
     }
 
-    private void createRadetRecord(List<Container> containerList){
+    public void createRadetRecord(List<Container> containerList){
       if(!containerList.isEmpty()) {
           List<Radet> containerListRecord = new ArrayList<>();
           for (Container container : containerList) {
@@ -66,7 +63,7 @@ public class RadetService {
     }
 
 
-     private Radet setupContainer(Container container){
+     public  static Radet setupContainer(Container container){
          Radet radet = new Radet(container);
          Radet radetContent =new Radet();
          radetContent.setDatimCode(radet.getDatimCode());

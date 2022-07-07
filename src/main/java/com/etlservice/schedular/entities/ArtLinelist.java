@@ -146,8 +146,9 @@ public class ArtLinelist implements Serializable {
     private String viralLoadIndication;
     @Column(name = "patient_outcome")
     private String patientOutcome;
+    @Temporal(TemporalType.DATE)
     @Column(name = "patient_outcome_date")
-    private String patientOutcomeDate;
+    private Date patientOutcomeDate;
     @Column(name = "current_art_status")
     private String currentArtStatus;
     @Column(name = "dispensing_modality")
@@ -219,9 +220,15 @@ public class ArtLinelist implements Serializable {
     private Date currentInhStopDate;
     @Column(name = "current_inh_outcome")
     private String currentInhOutcome;
+    @Column(name = "current_inh_outcome_date")
+    @Temporal(TemporalType.DATE)
+    private Date currentInhOutcomeDate;
     @Column(name = "last_inh_dispensed_date")
     @Temporal(TemporalType.DATE)
     private Date lastInhDispensedDate;
+    @Column(name = "baseline_tb_treatment_start_date")
+    @Temporal(TemporalType.DATE)
+    private Date baselineTbTreatmentStartDate;
     @Column(name = "baseline_tb_treatment_stop_date")
     @Temporal(TemporalType.DATE)
     private Date baselineTbTreatmentStopDate;
@@ -245,6 +252,8 @@ public class ArtLinelist implements Serializable {
     @Column(name = "initial_first_line_regimen_date")
     @Temporal(TemporalType.DATE)
     private Date initialFirstLineRegimenDate;
+    @Column(name = "initial_second_line_regimen")
+    private String initialSecondLineRegimen;
     @Column(name = "initial_second_line_regimen_date")
     @Temporal(TemporalType.DATE)
     private Date initialSecondLineRegimenDate;
@@ -260,6 +269,25 @@ public class ArtLinelist implements Serializable {
     private Date patientOutcomeDatePreviousQuater;
     @Column(name = "art_status_previous_quater")
     private String artStatusPreviousQuater;
+
+    @Column(name = "anc_no_identifier")
+    private String ancNoIdentifier;
+    @Column(name = "anc_no_concept_id")
+    private String ancNoConceptId;
+    @Column(name = "art_confirmation_date")
+    @Temporal(TemporalType.DATE)
+    private Date artConfirmationDate;
+    @Column(name = "first_pickup_date")
+    @Temporal(TemporalType.DATE)
+    private Date firstPickupDate;
+    @Column(name = "hts_no")
+    private String htsNo;
+    @Column(name = "last_qty_of_arv_refill")
+    private BigInteger lastQtyOfArvRefill;
+//    @Column(name = "pharmacy_next_appointment")
+//    @Temporal(TemporalType.DATE)
+//    private Date pharmacyNextAppointment;
+
 
     public ArtLinelist() {
     }
@@ -644,11 +672,11 @@ public class ArtLinelist implements Serializable {
         this.patientOutcome = patientOutcome;
     }
 
-    public String getPatientOutcomeDate() {
+    public Date getPatientOutcomeDate() {
         return patientOutcomeDate;
     }
 
-    public void setPatientOutcomeDate(String patientOutcomeDate) {
+    public void setPatientOutcomeDate(Date patientOutcomeDate) {
         this.patientOutcomeDate = patientOutcomeDate;
     }
 
@@ -725,6 +753,7 @@ public class ArtLinelist implements Serializable {
     }
 
     public BigInteger getCurrentAgeYrs() {
+
         return currentAgeYrs;
     }
 
@@ -1028,5 +1057,77 @@ public class ArtLinelist implements Serializable {
     public String toString() {
         return "com.etlservice.schedular.entities.ArtLinelist[ id=" + id + " ]";
     }
-    
+
+
+    public String getAncNoIdentifier() {
+        return ancNoIdentifier;
+    }
+
+    public void setAncNoIdentifier(String ancNoIdentifier) {
+        this.ancNoIdentifier = ancNoIdentifier;
+    }
+
+    public String getAncNoConceptId() {
+        return ancNoConceptId;
+    }
+
+    public void setAncNoConceptId(String ancNoConceptId) {
+        this.ancNoConceptId = ancNoConceptId;
+    }
+
+    public Date getArtConfirmationDate() {
+        return artConfirmationDate;
+    }
+
+    public void setArtConfirmationDate(Date artConfirmationDate) {
+        this.artConfirmationDate = artConfirmationDate;
+    }
+
+    public Date getBaselineTbTreatmentStartDate() {
+        return baselineTbTreatmentStartDate;
+    }
+
+    public void setBaselineTbTreatmentStartDate(Date baselineTbTreatmentStartDate) {
+        this.baselineTbTreatmentStartDate = baselineTbTreatmentStartDate;
+    }
+
+    public Date getCurrentInhOutcomeDate() {
+        return currentInhOutcomeDate;
+    }
+
+    public void setCurrentInhOutcomeDate(Date currentInhOutcomeDate) {
+        this.currentInhOutcomeDate = currentInhOutcomeDate;
+    }
+
+    public Date getFirstPickupDate() {
+        return firstPickupDate;
+    }
+
+    public void setFirstPickupDate(Date firstPickupDate) {
+        this.firstPickupDate = firstPickupDate;
+    }
+
+    public String getHtsNo() {
+        return htsNo;
+    }
+
+    public void setHtsNo(String htsNo) {
+        this.htsNo = htsNo;
+    }
+
+    public String getInitialSecondLineRegimen() {
+        return initialSecondLineRegimen;
+    }
+
+    public void setInitialSecondLineRegimen(String initialSecondLineRegimen) {
+        this.initialSecondLineRegimen = initialSecondLineRegimen;
+    }
+
+    public BigInteger getLastQtyOfArvRefill() {
+        return lastQtyOfArvRefill;
+    }
+
+    public void setLastQtyOfArvRefill(BigInteger lastQtyOfArvRefill) {
+        this.lastQtyOfArvRefill = lastQtyOfArvRefill;
+    }
 }

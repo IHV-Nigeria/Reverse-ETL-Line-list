@@ -6,6 +6,7 @@
 package com.etlservice.schedular.mongorepo.postgres;
 
 import com.etlservice.schedular.entities.ArtLinelist;
+import com.etlservice.schedular.model.Radet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

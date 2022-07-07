@@ -714,22 +714,6 @@ public class Radet {
     }
 
     public String getKpType() {
-//        Container radetContainer = container;
-//        List<ObsType> kpTypeList = radetContainer.getMessageData().getObs();
-//        List<Date> daysOfARVRefilDateList = new ArrayList();
-//        Map<Date, ObsType> kpTypeMap = new HashMap<>();
-//
-//
-//        for (ObsType obsType : kpTypeList) {
-//            if(obsType.getConceptId() == 166369 && obsType.getFormId() == 23)
-//                kpTypeMap.put(obsType.getObsDatetime(),obsType);
-//        }for (Date daysOfARVRefilDate : kpTypeMap.keySet()){
-//            daysOfARVRefilDateList.add(daysOfARVRefilDate);
-//        }
-//        if(!daysOfARVRefilDateList.isEmpty()) {
-//            Date latestDate = Collections.max(daysOfARVRefilDateList);
-//            kpType = kpTypeMap.get(latestDate).getVariableValue()+"";
-//        }
         kpType = getMaxVariableValue(166369,23);
         return kpType;
     }
@@ -1950,7 +1934,8 @@ public class Radet {
         try {
             Container radetContainer = container;
             int patientId = 0;
-            if (radetContainer.getMessageData().getPatientBiometrics().size() > 0) {
+
+            if (radetContainer.getMessageData().getPatientBiometrics() != null && radetContainer.getMessageData().getPatientBiometrics().size() > 0) {
                 patientId = radetContainer.getMessageData().getPatientBiometrics().get(0).getPatientId();
                 biometricCaptured = "Yes";
             } else
