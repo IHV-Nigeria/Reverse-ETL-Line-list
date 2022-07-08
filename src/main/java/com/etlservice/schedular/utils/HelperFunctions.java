@@ -319,8 +319,9 @@ public class HelperFunctions {
         return biometricCapturedDate;
     }
 
-    public static Optional<String> getInitialRegimenLine(int adultConceptID, int childConceptId, Container container) {
-        String InitialRegimenLine = null;
+    public static Optional<ObsType> getInitialRegimenLine(int adultConceptID, int childConceptId, Container container) {
+//        String InitialRegimenLine = null;
+        ObsType obs = null;
         try {
             Container radetContainer = container;
             List<ObsType> obsList = radetContainer.getMessageData().getObs();
@@ -338,12 +339,14 @@ public class HelperFunctions {
             }
             if (!InitialFirstLineRegimenDateList.isEmpty()) {
                 Date latestDate = Collections.min(InitialFirstLineRegimenDateList);
-                InitialRegimenLine = InitialFirstLineRegimenMap.get(latestDate).getVariableValue();
+//                InitialRegimenLine = InitialFirstLineRegimenMap.get(latestDate).getVariableValue();
+                obs = InitialFirstLineRegimenMap.get(latestDate);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return Optional.ofNullable(InitialRegimenLine);
+//        return Optional.ofNullable(InitialRegimenLine);
+        return Optional.ofNullable(obs);
     }
 
     public static Optional<Date> getInitialRegimenLineDate(int adultConceptID, int childConceptId, Container container) {
@@ -419,6 +422,19 @@ public class HelperFunctions {
             e.printStackTrace();
         }
         return validCapture;
+    }
+
+    public static void preeviousQuarter(Date today){
+
+        List<String> Q1 = Arrays.asList("OCT","NOV","DEC");
+        List<String> Q2 = Arrays.asList("JAN","FEB","MAR");
+        List<String> Q3 = Arrays.asList("APR","MAY","JUN");
+        List<String> Q4 = Arrays.asList("JUL","AUG","SEP");
+
+        LocalDate localDate = convertDate(today);
+        localDate.getMonth().firstMonthOfQuarter().toString();
+
+
     }
 
 

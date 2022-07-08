@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import static com.etlservice.schedular.utils.ConstantsUtils.*;
+import static com.etlservice.schedular.utils.Regimen.getRegimen;
 
 
 /**
@@ -95,7 +96,15 @@ public class ARTLineListETLImpl implements ARTLineListETL {
         Optional<ObsType> initialRegOpt = HelperFunctions.getMinObsbyConceptID(ConstantsUtils.PharmacyEncounterType, 165708, container);
 
         if (initialRegOpt.isPresent()) {
-            artLinelist.setInitialRegimen(initialRegOpt.map(ObsType::getVariableValue).get());
+//            artLinelist.setInitialRegimen(initialRegOpt.map(ObsType::getVariableValue).get());
+            String regimen = getRegimen(initialRegOpt.map(ObsType::getValueCoded).get());
+            artLinelist.setInitialRegimen(regimen);
+        }
+
+        Optional<ObsType> initialRegLine = HelperFunctions.getMinObsbyConceptID(ConstantsUtils.PharmacyEncounterType, 165708, container);
+
+        if (initialRegLine.isPresent()) {
+            artLinelist.setInitialRegimenLine(initialRegOpt.map(ObsType::getVariableValue).get());
         }
 
         Optional<ObsType> initialCd4Opt = HelperFunctions.getMinObsbyConceptID(LabEncounterType, 5497, container);
@@ -114,7 +123,8 @@ public class ARTLineListETLImpl implements ARTLineListETL {
         Optional<ObsType> currentRegOpt = HelperFunctions.getMaxObsbyConceptID(ConstantsUtils.PharmacyEncounterType, 165708, container);
 
         if (currentRegOpt.isPresent()) {
-            artLinelist.setCurrentRegimen(currentRegOpt.map(ObsType::getVariableValue).get());
+            String regimen = getRegimen(currentRegOpt.map(ObsType::getValueCoded).get());
+            artLinelist.setCurrentRegimen(regimen);
         }
 
 
@@ -227,17 +237,21 @@ public class ARTLineListETLImpl implements ARTLineListETL {
 
         artLinelist.setHtsNo(HelperFunctions.returnIdentifiers(8, container).orElse(null));
 
-        Optional<String> initialFirstLineRegimen = HelperFunctions.getInitialRegimenLine(164506,164507,container);
-        if(initialFirstLineRegimen.isPresent())
-            artLinelist.setInitialFirstLineRegimen(initialFirstLineRegimen.get());
+        Optional<ObsType> initialFirstLineRegimen = HelperFunctions.getInitialRegimenLine(164506,164507,container);
+        if(initialFirstLineRegimen.isPresent()) {
+            String regimen = getRegimen(initialFirstLineRegimen.get().getValueCoded());
+            artLinelist.setInitialFirstLineRegimen(regimen);
+        }
 
         Optional<Date> initialFirstLineRegimenDate = HelperFunctions.getInitialRegimenLineDate(164506,164507,container);
         if(initialFirstLineRegimenDate.isPresent())
             artLinelist.setInitialFirstLineRegimenDate(initialFirstLineRegimenDate.get());
 
-        Optional<String> initialSecondLineRegimen = HelperFunctions.getInitialRegimenLine(164513,164514,container);
-        if(initialSecondLineRegimen.isPresent())
-            artLinelist.setInitialSecondLineRegimen(initialSecondLineRegimen.get());
+        Optional<ObsType> initialSecondLineRegimen = HelperFunctions.getInitialRegimenLine(164513,164514,container);
+        if(initialSecondLineRegimen.isPresent()) {
+            String regimen = getRegimen(initialSecondLineRegimen.get().getValueCoded());
+            artLinelist.setInitialSecondLineRegimen(regimen);
+        }
 
         Optional<Date> initialSecondLineRegimenDate = HelperFunctions.getInitialRegimenLineDate(164513,164514,container);
         if(initialSecondLineRegimenDate.isPresent())
@@ -316,7 +330,7 @@ public class ARTLineListETLImpl implements ARTLineListETL {
         Optional<ObsType> tbStatus = HelperFunctions.getMaxObsbyConceptID(CareCardEncounterType,1659,container);
         if(tbStatus.isPresent()) {
             artLinelist.setTbStatus(tbStatus.get().getVariableValue());
-            artLinelist.setTbStatusDate(tbStatus.get().getValueDatetime());
+            artLinelist.setTbStatusDate(tbStatus.get().getObsDatetime());
         }
 
         Optional<ObsType> treatmentSupporterPhoneNo = HelperFunctions.getMaxObsbyConceptID(EnrollmentType,160642,container);
