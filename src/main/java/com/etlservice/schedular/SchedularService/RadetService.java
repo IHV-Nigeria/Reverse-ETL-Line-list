@@ -66,13 +66,13 @@ public class RadetService {
     }
 
 
-     private Radet setupContainer(Container container){
+     public Radet setupContainer(Container container){
          Radet radet = new Radet(container);
-         Radet radetContent =new Radet();
+         Radet radetContent = new Radet();
          radetContent.setDatimCode(radet.getDatimCode());
          radetContent.setFacilityName(radet.getFacilityName());
          radetContent.setPatientID(radet.getPatientID());
-         radetContent.setPatientUniqueID(radet.getPatientUniqueID());
+         radetContent.setPatientUniqueID(radet.returnIdentifiers(4));
          radetContent.setPatientHospitalNo(radet.getPatientHospitalNo());
          radetContent.setAncNo(radet.getAncNo());
          radetContent.setHtsNo(radet.getHtsNo());

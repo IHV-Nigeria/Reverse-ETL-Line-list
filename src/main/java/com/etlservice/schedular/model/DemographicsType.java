@@ -9,7 +9,6 @@
 package com.etlservice.schedular.model;
 
 import javax.xml.bind.annotation.*;
-// import javax.xml.datatype.Date;
 import java.io.Serializable;
 import java.util.Date;
 

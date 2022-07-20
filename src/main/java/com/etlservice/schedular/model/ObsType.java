@@ -8,6 +8,8 @@
 
 package com.etlservice.schedular.model;
 
+import lombok.ToString;
+
 import javax.xml.bind.annotation.*;
 // import javax.xml.datatype.Date;
 import java.io.Serializable;
@@ -88,6 +90,7 @@ import java.util.Date;
         "visitUuid",
         "datatype"
 })
+@ToString
 public class ObsType implements Serializable {
 
     @XmlElement(name = "obs_uuid", required = true)

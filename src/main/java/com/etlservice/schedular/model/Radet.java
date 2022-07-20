@@ -293,14 +293,16 @@ public class Radet {
     public Radet() {
 
     }
-    String returnIdentifiers(int num){
+    public String returnIdentifiers(int num){
         Container radetContainer = container;
-        String id ="";
+        String id = null;
         if(radetContainer != null) {
             List<PatientIdentifierType> patientIdentifierTypeList = radetContainer.getMessageData().getPatientIdentifiers();
             for(PatientIdentifierType patientIdentifierType : patientIdentifierTypeList){
-                if(patientIdentifierType.getIdentifierType() == num)
+                if(patientIdentifierType.getIdentifierType() == num) {
                     id = patientIdentifierType.getIdentifier();
+                    break;
+                }
             }
         }
         return id;
@@ -546,7 +548,7 @@ public class Radet {
 //                    patientUniqueID = patientIdentifierType.getIdentifier();
 //            }
 //        }
-        patientUniqueID = returnIdentifiers(4);
+//        patientUniqueID = returnIdentifiers(4);
         return patientUniqueID;
     }
 
