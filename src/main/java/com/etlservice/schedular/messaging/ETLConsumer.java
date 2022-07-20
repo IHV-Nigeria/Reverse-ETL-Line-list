@@ -9,6 +9,7 @@ import com.etlservice.schedular.service.ARTLineListETL;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,13 +22,10 @@ import org.springframework.stereotype.Component;
  * @author MORRISON.I
  */
 @Component
+@RequiredArgsConstructor
 public class ETLConsumer {
-
-    @Autowired
-    MongoTemplate mongoTemplate;
-
-    @Autowired
-    private ARTLineListETL aRTLineListETL;
+    private final MongoTemplate mongoTemplate;
+    private final ARTLineListETL aRTLineListETL;
 
     @RabbitListener(queues = "${etl.queue}")
     public void receive(List<Container> containerList) {

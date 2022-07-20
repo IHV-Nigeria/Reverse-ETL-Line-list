@@ -59,7 +59,7 @@ public class FileUpload implements Serializable {
     @Column(name = "validator_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date validatorDate;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "file_batch_id",referencedColumnName = "fileBatchId")
     private FileBatch fileBatchId;
 

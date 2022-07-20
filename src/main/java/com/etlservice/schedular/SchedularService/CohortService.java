@@ -6,7 +6,7 @@
 package com.etlservice.schedular.SchedularService;
 
 import com.etlservice.schedular.model.Cohort;
-import com.etlservice.schedular.model.Facility;
+import com.etlservice.schedular.entities.Facility;
 import com.etlservice.schedular.model.FlatFile;
 import com.etlservice.schedular.model.Radet;
 import com.etlservice.schedular.mongorepo.postgres.CohortRepository;
@@ -238,8 +238,8 @@ public class CohortService {
         Facility facility = facilityRepository.findFacilityByDatimCode(cohort.getDatimCode());
         if(facility != null) {
             flatFile.setOrgUnitName(facility.getFacilityName());
-            flatFile.setStateName(facility.getState());
-            flatFile.setLgaName(facility.getLga());
+            flatFile.setStateName(facility.getState().getStateName());
+            flatFile.setLgaName(facility.getLga().getLga());
         }
         return flatFile;
     }
